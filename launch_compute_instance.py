@@ -20,7 +20,7 @@ def launch_compute_instance(infile):
     }
     with open(file=infile, mode='r', encoding='utf-8') as f:
         fo = f.read()
-    response = requests.post(url=url, headers=headers, data=fo, auth=auth).text
+    response = requests.post(url=url, headers=headers, data=fo, auth=auth).status_code
     return response
 
 def access_token(cache_dir, cfg):
