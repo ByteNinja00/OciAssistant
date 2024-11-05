@@ -20,7 +20,7 @@ def launch_compute_instance(infile):
     }
     with open(file=infile, mode='r', encoding='utf-8') as f:
         fo = f.read()
-    response = requests.post(url=url, headers=headers, data=fo, auth=auth).status_code
+    response = requests.post(url=url, headers=headers, data=fo, auth=auth).json()
     return response
 
 def access_token(cache_dir, cfg):
@@ -57,11 +57,11 @@ if __name__ == '__main__':
     rqst_instance_result = launch_compute_instance(infile='/root/.oci/CONFIG/instance.cfg')
     msg_text = f'\t\t抢占成功\n\n返回结果: {rqst_instance_result}\n请求令牌: {rqst_token}\n文件校验: {fileValid.is_valid(infile="/root/.oci/MSG/cache/token.db")}\n时间校验: {timeValid.is_valid(in_file="/root/.oci/MSG/cache")}'
     while True:
-        if rqst_instance_result == 200:
+        if rqst_instance_result['code'] != 'InternalError' and 'TooManyRequests':
             print(send_msg.push_message(access_token=rqst_token,
                                         agent_id=cfg['agentid'],
                                         to_who=cfg['users'],
                                         message_content=msg_text))
             break
         print(rqst_instance_result)
-        sleep(15)
+        sleep(10)
