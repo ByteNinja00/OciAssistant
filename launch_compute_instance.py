@@ -51,11 +51,11 @@ if __name__ == '__main__':
     fileValid = wechat.FileValidtor()
     timeValid = wechat.TimeValidtor()
     ldcfg = wechat.LoadConfig()
-    cfg = ldcfg.loadcfg(cfg_path='/Users/alex/.oci/MSG/wxcfg.json')
+    cfg = ldcfg.loadcfg(cfg_path='/root/.oci/MSG/wxcfg.json')
     send_msg = wechat.TextMessage()
-    rqst_token = access_token(cache_dir='/Users/alex/.oci/MSG/cache', cfg='/Users/alex/.oci/MSG/wxcfg.json')
-    rqst_instance_result = launch_compute_instance(infile='/Users/alex/.oci/CONFIG/instance.cfg')
-    msg_text = f'\t\t抢占成功\n\n返回结果: {rqst_instance_result}\n请求令牌: {rqst_token}\n文件校验: {fileValid.is_valid(infile="/Users/alex/.oci/MSG/cache/token.db")}\n时间校验: {timeValid.is_valid(in_file="/Users/alex/.oci/MSG/cache")}'
+    rqst_token = access_token(cache_dir='/root/.oci/MSG/cache', cfg='/root/.oci/MSG/wxcfg.json')
+    rqst_instance_result = launch_compute_instance(infile='/root/.oci/CONFIG/instance.cfg')
+    msg_text = f'\t\t抢占成功\n\n返回结果: {rqst_instance_result}\n请求令牌: {rqst_token}\n文件校验: {fileValid.is_valid(infile="/root/.oci/MSG/cache/token.db")}\n时间校验: {timeValid.is_valid(in_file="/root/.oci/MSG/cache")}'
     while True:
         if rqst_instance_result == 200:
             print(send_msg.push_message(access_token=rqst_token,
